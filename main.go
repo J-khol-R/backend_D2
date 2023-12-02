@@ -18,13 +18,31 @@ func main() {
 
 	// db.MigrateModels()
 
+	// password, err := security.HashPassword("contraseña")
+	// if err != nil {
+	// 	return
+	// }
+	// newUser := models.User{
+	// 	Nombre:     "valentina",
+	// 	Telefono:   "1234",
+	// 	Ciudad:     "bugalagrande",
+	// 	Correo:     "john@example.com",
+	// 	Username:   "john_doe",
+	// 	Contraseña: password,
+	// }
+
+	// // Utilizar el método Create para insertar el usuario en la base de datos
+	// if err := db.Conn.Create(&newUser).Error; err != nil {
+	// 	panic(err)
+	// }
+
 	//User
 	r.HandleFunc("/v1/user/{id}", controllers.GetUser).Methods(http.MethodGet)
 	r.HandleFunc("/v1/user/{id}", controllers.UpdateUser).Methods(http.MethodPut)
 	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost)
 
 	//login
-	r.HandleFunc("/v1/login", controllers.GetSesion).Methods(http.MethodGet)
+	r.HandleFunc("/v1/login", controllers.GetSesion).Methods(http.MethodPost)
 
 	//offers
 	r.HandleFunc("/v1/offers", controllers.GetAllOffers).Methods(http.MethodGet)
