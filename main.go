@@ -53,19 +53,21 @@ func main() {
 	//User
 	r.HandleFunc("/v1/user/{id}", controllers.GetUser).Methods(http.MethodGet)
 	r.HandleFunc("/v1/user/{id}", controllers.UpdateUser).Methods(http.MethodPut)
-	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost)
+	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost) //vale
 
 	//login
-	r.HandleFunc("/v1/login", controllers.GetSesion).Methods(http.MethodPost)
+	r.HandleFunc("/v1/login", controllers.GetSesion).Methods(http.MethodPost) //vale
 
 	//offers
-	r.HandleFunc("/v1/offers", controllers.GetAllOffers).Methods(http.MethodGet)
-	r.HandleFunc("/v1/offers", controllers.CreateOffer).Methods(http.MethodPost)
-	r.HandleFunc("/v1/offers/{id}", controllers.GetOffer).Methods(http.MethodGet)
-	r.HandleFunc("/v1/offers/{id}", controllers.UpdateOffer).Methods(http.MethodPut)
-	r.HandleFunc("/v1/offers/{id}", controllers.DeleteOffer).Methods(http.MethodDelete)
-	r.HandleFunc("/v1/offers/created/{idUser}", controllers.GetCreatedUserOffers).Methods(http.MethodGet)
-	r.HandleFunc("/v1/offers/postulated/{idUser}", controllers.GetPostutatedUserOffers).Methods(http.MethodGet)
+	r.HandleFunc("/v1/offers", controllers.GetAllOffers).Methods(http.MethodGet)                                //vale
+	r.HandleFunc("/v1/offers/{id}", controllers.GetOffer).Methods(http.MethodGet)                               //vale
+	r.HandleFunc("/v1/offers/{id}", controllers.DeleteOffer).Methods(http.MethodDelete)                         //vale
+	r.HandleFunc("/v1/offers/created/{idUser}", controllers.GetCreatedUserOffers).Methods(http.MethodGet)       //vale
+	r.HandleFunc("/v1/offers/postulated/{idUser}", controllers.GetPostutatedUserOffers).Methods(http.MethodGet) //vale
+
+	//service
+	r.HandleFunc("/v1/service", controllers.CreateService).Methods(http.MethodPost)     //vale
+	r.HandleFunc("/v1/service/{id}", controllers.UpdateService).Methods(http.MethodPut) //vale
 
 	//postulations
 	r.HandleFunc("/v1/postulations/{idUser}", controllers.GetUserPostulations).Methods(http.MethodGet)

@@ -13,11 +13,6 @@ func NewOfferGormRepository(db *gorm.DB) *OfferGormRepository {
 	return &OfferGormRepository{db}
 }
 
-// // Create implementa el método Create de UserRepository
-// func (r *OfferGormRepository) Create(user *User) error {
-//     return r.db.Create(user).Error
-// }
-
 // Read implementa el método Read de UserRepository
 func (r *OfferGormRepository) Read(id uint) (*models.Offer, error) {
 	var offer models.Offer
@@ -32,15 +27,10 @@ func (r *OfferGormRepository) Read(id uint) (*models.Offer, error) {
 	return &offer, nil
 }
 
-// // Update implementa el método Update de UserRepository
-// func (r *OfferGormRepository) Update(user *User) error {
-//     return r.db.Save(user).Error
-// }
-
-// // Delete implementa el método Delete de UserRepository
-// func (r *OfferGormRepository) Delete(id uint) error {
-//     return r.db.Delete(&User{}, id).Error
-// }
+// Delete implementa el método Delete de UserRepository
+func (r *OfferGormRepository) Delete(id uint) error {
+	return r.db.Delete(&models.Offer{}, id).Error
+}
 
 // lista todas las ofertas acorde a una condicion
 func (r *OfferGormRepository) List(condition map[string]interface{}) ([]models.Offer, error) {
@@ -49,4 +39,30 @@ func (r *OfferGormRepository) List(condition map[string]interface{}) ([]models.O
 		return nil, err
 	}
 	return offers, nil
+}
+
+func (r *OfferGormRepository) ListCreatedUserOffers(idUser uint) ([]models.Offer, error) {
+	var offers []models.Offer
+	if err := r.db.Where("id_ofertante = ?", idUser).Find(&offers).Error; err != nil {
+		return nil, err
+	}
+	return offers, nil
+}
+
+func (r *OfferGormRepository) ListPostulatedUserOffers(idUser uint) ([]models.Offer, error) {
+	var offersPostulant []models.Offer
+	var postulant []models.Postulant
+
+	if err := r.db.Where("IDUser = ?", idUser).Find(&postulant).Error; err != nil {
+		return nil, err
+	}
+
+	for _, postulacion := range postulant {
+		oferta := models.Offer{}
+		if err := r.db.First(&oferta, postulacion.IDOffer).Error; err != nil {
+			return nil, err
+		}
+		offersPostulant = append(offersPostulant, oferta)
+	}
+	return offersPostulant, nil
 }
