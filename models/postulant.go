@@ -6,7 +6,9 @@ import (
 
 type Postulant struct {
 	gorm.Model
-	IDOffer string `gorm:"foreignKey:IDOffer"`
-	IDUser  string `gorm:"foreignKey:IDUser"`
+	IDOffer uint
+	Offer   Offer `gorm:"foreignKey:IDOffer"`
+	IDUser  uint
+	User    User `gorm:"foreignKey:IDUser"`
 	Estado  string
 }

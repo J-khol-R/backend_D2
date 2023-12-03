@@ -15,12 +15,14 @@ type Service struct {
 
 type CategoriaServicio struct {
 	gorm.Model
-	IDService int `gorm:"foreignKey:IDService"`
+	IDService int
+	Service   Service `gorm:"foreignKey:IDService"`
 	Categoria string
 }
 
 type ImagenServicio struct {
 	gorm.Model
-	IDService int `gorm:"foreignKey:IDService"`
+	IDService int
+	Service   Service `gorm:"foreignKey:IDService"`
 	ImagenURL string
 }

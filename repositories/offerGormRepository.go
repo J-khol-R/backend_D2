@@ -18,14 +18,19 @@ func NewOfferGormRepository(db *gorm.DB) *OfferGormRepository {
 //     return r.db.Create(user).Error
 // }
 
-// // Read implementa el método Read de UserRepository
-// func (r *OfferGormRepository) Read(id uint) (*User, error) {
-//     var user User
-//     if err := r.db.First(&user, id).Error; err != nil {
-//         return nil, err
-//     }
-//     return &user, nil
-// }
+// Read implementa el método Read de UserRepository
+func (r *OfferGormRepository) Read(id uint) (*models.Offer, error) {
+	var offer models.Offer
+
+	result := r.db.Preload("Servicio").
+		Preload("Ofertante").
+		First(&offer, id)
+
+	if result.Error != nil {
+		return &offer, result.Error
+	}
+	return &offer, nil
+}
 
 // // Update implementa el método Update de UserRepository
 // func (r *OfferGormRepository) Update(user *User) error {

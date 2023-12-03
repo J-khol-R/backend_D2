@@ -22,18 +22,32 @@ func main() {
 	// if err != nil {
 	// 	return
 	// }
-	// newUser := models.User{
-	// 	Nombre:     "valentina",
-	// 	Telefono:   "1234",
-	// 	Ciudad:     "bugalagrande",
-	// 	Correo:     "john@example.com",
-	// 	Username:   "john_doe",
-	// 	Contraseña: password,
+	// score := models.Score{
+	// 	Nro_estrellas: "3",
+	// 	Comentarios: "excelente",
+	// 	Fecha: "hoy",
+	// 	Calificador: "",
 	// }
 
 	// // Utilizar el método Create para insertar el usuario en la base de datos
 	// if err := db.Conn.Create(&newUser).Error; err != nil {
 	// 	panic(err)
+	// }
+
+	// nuevaOferta := models.Offer{
+	// 	IDServicio:  1, // Reemplaza con el ID del servicio real
+	// 	IDOfertante: 4, // Reemplaza con el ID del ofertante real
+	// 	Estado:      "Pendiente",
+	// }
+
+	// // Crear la oferta en la base de datos
+	// db.Conn.Create(&nuevaOferta)
+
+	// // Verificar errores
+	// if db.Conn.Error != nil {
+	// 	// Manejar el error, por ejemplo, imprimirlo
+	// 	fmt.Println(db.Conn.Error)
+	// 	return
 	// }
 
 	//User
