@@ -4,9 +4,8 @@ import "github.com/J-khol-R/backend_D2/models"
 
 func MigrateModels() {
 	Conn.AutoMigrate(&models.User{},
-		&models.Service{},
-		&models.CategoriaServicio{},
-		&models.ImagenServicio{},
+		&models.CategoriaOferta{},
+		&models.ImagenOferta{},
 		&models.Score{},
 		&models.Postulant{},
 		&models.Offer{})

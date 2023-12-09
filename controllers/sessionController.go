@@ -28,7 +28,7 @@ func GetSesion(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = security.CheckPassword(login.Password, user.Contraseña)
+	err = security.CheckPassword(login.Password, user.Password)
 	if err != nil {
 		http.Error(w, "contraseña incorrecta: "+err.Error(), http.StatusForbidden)
 		return
@@ -41,7 +41,8 @@ func GetSesion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tokenResponse := models.TokenResponse{
-		Token: token,
+		IdUser: int(user.ID),
+		Token:  token,
 	}
 
 	err = json.NewEncoder(w).Encode(tokenResponse)

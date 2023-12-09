@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/J-khol-R/backend_D2/controllers"
+	"github.com/J-khol-R/backend_D2/db"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -16,7 +17,7 @@ func main() {
 
 	r := mux.NewRouter()
 
-	// db.MigrateModels()
+	db.MigrateModels()
 
 	// password, err := security.HashPassword("contraseña")
 	// if err != nil {
@@ -51,9 +52,9 @@ func main() {
 	// }
 
 	//User
-	r.HandleFunc("/v1/user/{id}", controllers.GetUser).Methods(http.MethodGet)
-	r.HandleFunc("/v1/user/{id}", controllers.UpdateUser).Methods(http.MethodPut)
-	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost) //vale
+	r.HandleFunc("/v1/user/{id}", controllers.GetUser).Methods(http.MethodGet)    //listo
+	r.HandleFunc("/v1/user/{id}", controllers.UpdateUser).Methods(http.MethodPut) //listo
+	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost)     //vale
 
 	//login
 	r.HandleFunc("/v1/login", controllers.GetSesion).Methods(http.MethodPost) //vale
@@ -64,19 +65,17 @@ func main() {
 	r.HandleFunc("/v1/offers/{id}", controllers.DeleteOffer).Methods(http.MethodDelete)                         //vale
 	r.HandleFunc("/v1/offers/created/{idUser}", controllers.GetCreatedUserOffers).Methods(http.MethodGet)       //vale
 	r.HandleFunc("/v1/offers/postulated/{idUser}", controllers.GetPostutatedUserOffers).Methods(http.MethodGet) //vale
-
-	//service
-	r.HandleFunc("/v1/service", controllers.CreateService).Methods(http.MethodPost)     //vale
-	r.HandleFunc("/v1/service/{id}", controllers.UpdateService).Methods(http.MethodPut) //vale
+	r.HandleFunc("/v1/offer", controllers.CreateOffer).Methods(http.MethodPost)                                 //vale
+	r.HandleFunc("/v1/offer/{id}", controllers.UpdateOffer).Methods(http.MethodPut)                             //vale
 
 	//postulations
-	r.HandleFunc("/v1/postulations/{idUser}", controllers.GetUserPostulations).Methods(http.MethodGet)
+	r.HandleFunc("/v1/postulations/{idOffer}", controllers.GetOfferPostulations).Methods(http.MethodGet)
 	r.HandleFunc("/v1/postulations", controllers.CreatePostulation).Methods(http.MethodPost)
 	r.HandleFunc("/v1/postulations/{idPostulation}/{idUser}", controllers.DeletePostulation).Methods(http.MethodDelete)
 
 	//califications
-	r.HandleFunc("/v1/califications/{idUser}", controllers.GetUserCalification).Methods(http.MethodGet)
-	r.HandleFunc("/v1/califications", controllers.CreateCalification).Methods(http.MethodPost)
+	r.HandleFunc("/v1/califications/{idUser}", controllers.GetUserCalifications).Methods(http.MethodGet) // listo
+	r.HandleFunc("/v1/califications", controllers.CreateCalification).Methods(http.MethodPost)           //listo
 
 	corsOptions := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
