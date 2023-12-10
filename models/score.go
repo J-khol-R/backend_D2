@@ -9,10 +9,10 @@ type Score struct {
 	Nro_estrellas      int `gorm:"not null"`
 	Comentarios        string
 	Fecha              string
-	Calificador        string
+	Calificador        int
 	UserCalificador    User `gorm:"foreignKey:Calificador"`
-	Usuario_calificado string
+	Usuario_calificado int
 	UserCalificado     User `gorm:"foreignKey:Usuario_calificado"`
 	IDOferta           int
-	Offer              Offer `gorm:"foreignKey:IDOferta"`
+	Offer              Offer `gorm:"foreignKey:IDOferta" json:"-"`
 }

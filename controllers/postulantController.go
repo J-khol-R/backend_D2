@@ -30,7 +30,7 @@ func GetOfferPostulations(w http.ResponseWriter, r *http.Request) {
 	}
 
 	variable := mux.Vars(r)
-	id := (variable["id"])
+	id := (variable["idOffer"])
 
 	idOffer, err := strconv.Atoi(id)
 	if err != nil {
@@ -95,7 +95,7 @@ func DeletePostulation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	variable := mux.Vars(r)
-	id := (variable["id"])
+	id := (variable["idPostulation"])
 
 	idPostulation, err := strconv.Atoi(id)
 	if err != nil {

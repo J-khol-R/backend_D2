@@ -30,7 +30,7 @@ func GetUserCalifications(w http.ResponseWriter, r *http.Request) {
 	}
 
 	variable := mux.Vars(r)
-	id := (variable["id"])
+	id := (variable["idUser"])
 
 	idUser, err := strconv.Atoi(id)
 	if err != nil {

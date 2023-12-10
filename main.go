@@ -71,7 +71,7 @@ func main() {
 	//postulations
 	r.HandleFunc("/v1/postulations/{idOffer}", controllers.GetOfferPostulations).Methods(http.MethodGet)
 	r.HandleFunc("/v1/postulations", controllers.CreatePostulation).Methods(http.MethodPost)
-	r.HandleFunc("/v1/postulations/{idPostulation}/{idUser}", controllers.DeletePostulation).Methods(http.MethodDelete)
+	r.HandleFunc("/v1/postulations/{idPostulation}", controllers.DeletePostulation).Methods(http.MethodDelete)
 
 	//califications
 	r.HandleFunc("/v1/califications/{idUser}", controllers.GetUserCalifications).Methods(http.MethodGet) // listo

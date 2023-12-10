@@ -16,7 +16,10 @@ func NewScoreGormRepository(db *gorm.DB) *ScoreGormRepository {
 func (r *ScoreGormRepository) List(idUser uint) ([]models.Score, error) {
 	var calificaciones []models.Score
 
-	if err := r.db.Where("usuario_calificado = ?", idUser).Find(&calificaciones).Error; err != nil {
+	if err := r.db.Preload("UserCalificador").
+		Preload("UserCalificado").
+		Preload("Offer").
+		Where("usuario_calificado = ?", idUser).Find(&calificaciones).Error; err != nil {
 		return nil, err
 	}
 
