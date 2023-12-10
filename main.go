@@ -19,63 +19,47 @@ func main() {
 
 	db.MigrateModels()
 
-	// password, err := security.HashPassword("contraseña")
-	// if err != nil {
-	// 	return
-	// }
-	// score := models.Score{
-	// 	Nro_estrellas: "3",
-	// 	Comentarios: "excelente",
-	// 	Fecha: "hoy",
-	// 	Calificador: "",
-	// }
-
-	// // Utilizar el método Create para insertar el usuario en la base de datos
-	// if err := db.Conn.Create(&newUser).Error; err != nil {
-	// 	panic(err)
-	// }
-
-	// nuevaOferta := models.Offer{
-	// 	IDServicio:  1, // Reemplaza con el ID del servicio real
-	// 	IDOfertante: 4, // Reemplaza con el ID del ofertante real
-	// 	Estado:      "Pendiente",
-	// }
-
-	// // Crear la oferta en la base de datos
-	// db.Conn.Create(&nuevaOferta)
-
-	// // Verificar errores
-	// if db.Conn.Error != nil {
-	// 	// Manejar el error, por ejemplo, imprimirlo
-	// 	fmt.Println(db.Conn.Error)
-	// 	return
-	// }
-
 	//User
-	r.HandleFunc("/v1/user/{id}", controllers.GetUser).Methods(http.MethodGet)    //listo
-	r.HandleFunc("/v1/user/{id}", controllers.UpdateUser).Methods(http.MethodPut) //listo
-	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost)     //vale
+	//obtener el usuario con el id
+	r.HandleFunc("/v1/user/{id}", controllers.GetUser).Methods(http.MethodGet)
+	//actualizar usuario
+	r.HandleFunc("/v1/user/{id}", controllers.UpdateUser).Methods(http.MethodPut)
+	//crear usuario
+	r.HandleFunc("/v1/user", controllers.CreateUser).Methods(http.MethodPost) //vale
 
 	//login
+	//obtener el token de sesion y el id del usuario
 	r.HandleFunc("/v1/login", controllers.GetSesion).Methods(http.MethodPost) //vale
 
 	//offers
-	r.HandleFunc("/v1/offers", controllers.GetAllOffers).Methods(http.MethodGet)                                //vale
-	r.HandleFunc("/v1/offers/{id}", controllers.GetOffer).Methods(http.MethodGet)                               //vale
-	r.HandleFunc("/v1/offers/{id}", controllers.DeleteOffer).Methods(http.MethodDelete)                         //vale
-	r.HandleFunc("/v1/offers/created/{idUser}", controllers.GetCreatedUserOffers).Methods(http.MethodGet)       //vale
-	r.HandleFunc("/v1/offers/postulated/{idUser}", controllers.GetPostutatedUserOffers).Methods(http.MethodGet) //vale
-	r.HandleFunc("/v1/offer", controllers.CreateOffer).Methods(http.MethodPost)                                 //vale
-	r.HandleFunc("/v1/offer/{id}", controllers.UpdateOffer).Methods(http.MethodPut)                             //vale
+	//obtener todas las ofertas disponibles (una oferta ya no es disponible cuando acepto a alguien que me trabaje)
+	r.HandleFunc("/v1/offers", controllers.GetAllOffers).Methods(http.MethodGet)
+	//obtener una oferta por su id
+	r.HandleFunc("/v1/offers/{id}", controllers.GetOffer).Methods(http.MethodGet)
+	//borrar una oferta por su id
+	r.HandleFunc("/v1/offers/{id}", controllers.DeleteOffer).Methods(http.MethodDelete)
+	//obtener las ofertas que ha creado un usuario
+	r.HandleFunc("/v1/offers/created/{idUser}", controllers.GetCreatedUserOffers).Methods(http.MethodGet)
+	//obtener las ofertas a las que se ha postulado un usuario
+	r.HandleFunc("/v1/offers/postulated/{idUser}", controllers.GetPostutatedUserOffers).Methods(http.MethodGet)
+	//crear una oferta
+	r.HandleFunc("/v1/offer", controllers.CreateOffer).Methods(http.MethodPost)
+	//actualizar una oferta
+	r.HandleFunc("/v1/offer/{id}", controllers.UpdateOffer).Methods(http.MethodPut) //vale
 
 	//postulations
+	//obtener las postulaciones asociadas a una oferta
 	r.HandleFunc("/v1/postulations/{idOffer}", controllers.GetOfferPostulations).Methods(http.MethodGet)
+	//crear una postulacion
 	r.HandleFunc("/v1/postulations", controllers.CreatePostulation).Methods(http.MethodPost)
+	//eliminar una postulacion (cuando alguien ya no quiere estar postulado a esa oferta)
 	r.HandleFunc("/v1/postulations/{idPostulation}", controllers.DeletePostulation).Methods(http.MethodDelete)
 
 	//califications
-	r.HandleFunc("/v1/califications/{idUser}", controllers.GetUserCalifications).Methods(http.MethodGet) // listo
-	r.HandleFunc("/v1/califications", controllers.CreateCalification).Methods(http.MethodPost)           //listo
+	//obtener las calificaciones que s ele han hecho a un usuario
+	r.HandleFunc("/v1/califications/{idUser}", controllers.GetUserCalifications).Methods(http.MethodGet)
+	//crear una calificacion
+	r.HandleFunc("/v1/califications", controllers.CreateCalification).Methods(http.MethodPost) //listo
 
 	corsOptions := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
