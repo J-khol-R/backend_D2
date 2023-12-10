@@ -10,7 +10,6 @@ import (
 	"github.com/J-khol-R/backend_D2/db"
 
 	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 )
 
 func main() {
@@ -61,12 +60,12 @@ func main() {
 	//crear una calificacion
 	r.HandleFunc("/v1/califications", controllers.CreateCalification).Methods(http.MethodPost) //listo
 
-	corsOptions := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{"PUT", "GET", "POST", "DELETE"},
-	})
+	// corsOptions := cors.New(cors.Options{
+	// 	AllowedOrigins: []string{"*"},
+	// 	AllowedMethods: []string{"PUT", "GET", "POST", "DELETE"},
+	// })
 
-	handler := corsOptions.Handler(r)
+	handler := corsMiddleware(r)
 
 	direccion := ":8081"
 
@@ -79,4 +78,31 @@ func main() {
 
 	fmt.Printf("Escuchando en %s. Presiona CTRL + C para salir", servidor.Addr)
 	log.Fatal(servidor.ListenAndServe())
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Permitir todas las origenes
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		// Permitir los métodos HTTP especificados
+		w.Header().Set("Access-Control-Allow-Methods", "POST")
+		w.Header().Set("Access-Control-Allow-Methods", "GET")
+		w.Header().Set("Access-Control-Allow-Methods", "DELETE")
+		w.Header().Set("Access-Control-Allow-Methods", "PUT")
+
+		// Permitir los encabezados HTTP especificados
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		// Permitir el envío de cookies
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Si la solicitud es una solicitud OPTIONS, simplemente respondemos con los encabezados CORS sin continuar con la cadena de middleware
+		if r.Method == "OPTIONS" {
+			return
+		}
+
+		// Continuar con la cadena de middleware
+		next.ServeHTTP(w, r)
+	})
 }
