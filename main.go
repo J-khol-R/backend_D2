@@ -55,7 +55,7 @@ func main() {
 	r.HandleFunc("/v1/postulations/{idPostulation}", controllers.DeletePostulation).Methods(http.MethodDelete)
 
 	//califications
-	//obtener las calificaciones que s ele han hecho a un usuario
+	//obtener las calificaciones que se le han hecho a un usuario
 	r.HandleFunc("/v1/califications/{idUser}", controllers.GetUserCalifications).Methods(http.MethodGet)
 	//crear una calificacion
 	r.HandleFunc("/v1/califications", controllers.CreateCalification).Methods(http.MethodPost) //listo
@@ -86,10 +86,7 @@ func corsMiddleware(next http.Handler) http.Handler {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 
 		// Permitir los métodos HTTP especificados
-		w.Header().Set("Access-Control-Allow-Methods", "POST")
-		w.Header().Set("Access-Control-Allow-Methods", "GET")
-		w.Header().Set("Access-Control-Allow-Methods", "DELETE")
-		w.Header().Set("Access-Control-Allow-Methods", "PUT")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT")
 
 		// Permitir los encabezados HTTP especificados
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
