@@ -1,5 +1,11 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import 'vue3-toastify/dist/index.css';
 import './style.css'
-import App from './App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.use(router);
+
+app.mount('#app');

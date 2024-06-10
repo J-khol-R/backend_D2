@@ -3,7 +3,7 @@
       <div class="max-w-md w-full space-y-8">
         <div>
           <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Iniciar Sesión
+            Registro Usuario
           </h2>
         </div>
         <form class="mt-8 space-y-6" @submit.prevent="submitForm">
@@ -19,74 +19,57 @@
           </div>
           <div>
             <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Ingresar
-            </button>
-            <button @click="goToRegister" class="mt-1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Registrarse
+              Crear
             </button>
           </div>
         </form>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
-  import sessionService from '../services/sessionService'
-  import { toast } from 'vue3-toastify';
-  import 'vue3-toastify/dist/index.css';
-  
-  export default {
+<script>
+import { ref } from 'vue';
+import userService from '../services/userService'
+import { useRouter } from 'vue-router'; 
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
+
+export default {
     setup() {
-      const username = ref('');
-      const password = ref('');
-      const router = useRouter();
-  
-      const submitForm = async () => {
+        const username = ref('');
+        const password = ref('');
+        const router = useRouter();
+
+        const submitForm = async () => {
         const user = {
-          username: username.value,
-          password: password.value
+            username: username.value,
+            password: password.value,
+            role: "developer"
         };
-        
-        try {
-        const response = await sessionService.getSession(user);
 
-        if (response.data) {
-          const { id_user, token } = response.data;
-          localStorage.setItem('user_id', id_user);
-          localStorage.setItem('token', token);
-
-          toast.success('Login successful!', {
-            autoClose: 3000 
+        const response = await userService.createUser(user);
+        if (response.status === 201) {
+            toast.success('User created successfully!', {
+            autoClose: 3000 // 3 segundos
           });
           setTimeout(() => {
-            router.push('/home'); 
-          }, 3000); 
-          console.log(response)
+            router.push('/login');
+          }, 3000); // Espera 3 segundos antes de redirigir
         } else {
-          toast.error('Login failed.', {
-            autoClose: 5000 
+            toast.error('Failed to create user.', {
+            autoClose: 5000 // 5 segundos
           });
         }
+        console.log(response)
 
-        } catch (error) {
-          toast.error('An error occurred during login.', {
-            autoClose: 5000 
-          });
         };
-      };
 
-      const goToRegister = () => {
-      router.push('/register');
-      };  
-  
-      return {
+        return {
         username,
         password,
-        submitForm,
-        goToRegister
-      };
+        submitForm
+        };
     }
-  };
-  </script>
+};
+</script>
