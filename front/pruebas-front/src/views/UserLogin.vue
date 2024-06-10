@@ -61,7 +61,7 @@
             autoClose: 3000 
           });
           setTimeout(() => {
-            router.push('/home'); 
+            router.push('/projects'); 
           }, 3000); 
           console.log(response)
         } else {
