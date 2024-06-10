@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';
 import HomeView from '../views/HomeView.vue';
+import CreateProject from '../views/CreateProject.vue';
 
 const routes = [
   {
@@ -33,6 +34,15 @@ const routes = [
     name: 'Users',
     component: HomeView,
   },
+  {
+    path: '/create-project',
+    name: 'CreateProject',
+    component: CreateProject,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/login'
+  }
 ];
 
 const router = createRouter({
