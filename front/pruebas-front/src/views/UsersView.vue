@@ -8,9 +8,12 @@
                     <div class="px-6 py-4">
                         <h2 class="font-bold text-xl mb-2 text-gray-800">{{ user.name }}</h2>
                         <p class="text-gray-700 text-base">Rol: {{ user.role }}</p>
-                        <select v-model="user.newRole" class="mt-4" @change="handleChange(user)">
+                        <select v-model="user.newRole" class="mt-4">
                             <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
                         </select>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4" @click="handleSave(user)">
+                            Guardar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -50,7 +53,7 @@
                 console.error(error);
             }
         };
-        const handleChange = async (user) => {
+        const handleSave = async (user) => {
             try {
                 // Enviar la petición al backend para cambiar el rol
                 console.log('Cambiando rol:', user);
@@ -67,7 +70,7 @@
             // handleEdit,
             // handleDelete,
             getUsers,
-            handleChange,
+            handleSave,
         };
 
     },
