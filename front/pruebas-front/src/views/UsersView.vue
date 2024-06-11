@@ -11,7 +11,7 @@
                         <select v-model="user.newRole" class="mt-4">
                             <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
                         </select>
-                        <button class="btn btn-outline btn-accent mt-4" @click="handleSave(user)">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4" @click="handleSave(user)">
                             Guardar
                         </button>
                     </div>
@@ -70,7 +70,7 @@
             // handleEdit,
             // handleDelete,
             getUsers,
-            handleChange,
+            handleSave,
         };
 
     },
