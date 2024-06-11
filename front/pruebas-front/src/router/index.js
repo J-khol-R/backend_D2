@@ -3,6 +3,7 @@ import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';
 import HomeView from '../views/HomeView.vue';
 import CreateProject from '../views/CreateProject.vue';
+import HomeProjects from '../views/HomeProjects.vue';
 
 const routes = [
   {
@@ -22,19 +23,9 @@ const routes = [
   {
     path: '/projects',
     name: 'Projects',
-    component: HomeView,
+    component: HomeProjects,
   },
-  {
-    path: '/create-project',
-    name: 'CreateProject',
-    component: HomeView,
-  },
-  {
-    path: '/users',
-    name: 'Users',
-    component: HomeView,
-  },
-  {
+  { 
     path: '/create-project',
     name: 'CreateProject',
     component: CreateProject,
@@ -42,7 +33,7 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     redirect: '/login'
-  }
+  },
 ];
 
 const router = createRouter({
