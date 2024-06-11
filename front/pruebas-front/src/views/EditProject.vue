@@ -56,55 +56,67 @@
     </div>
   </template>
     
-<script>
-import { ref } from 'vue';
-import projectService from '../services/projectService';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
-import AsideDash from '../components/AsideDash.vue'
-
-export default {
-    setup() {
-    const nombreProyecto = ref('');
-    const fechaInicio = ref('');
-    const fechaLimite = ref('');
-    const descripcionProyecto = ref('');
-
-    const submitForm = async () => {
-        const project = {
+    <script>
+    import { ref } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';
+    import projectService from '../services/projectService';
+    import { toast } from 'vue3-toastify';
+    import 'vue3-toastify/dist/index.css';
+    import AsideDash from '../components/AsideDash.vue';
+    
+    export default {
+      props: {
+        route:{
+            Name: String,
+            StartDate: String,
+            FinishDate: String,
+            Description: String,
+            Id: Number
+        }
+      },
+      setup(props) {
+        const route = useRoute();
+        const router = useRouter();
+    
+        const nombreProyecto = ref(props.route.params.Name || '');
+        console.log(nombreProyecto.value)
+        const fechaInicio = ref(props.StartDate || '');
+        const fechaLimite = ref(props.FinishDate || '');
+        const descripcionProyecto = ref(props.Description || '');
+        const id = ref(props.Id || '');
+    
+        const submitForm = async () => {
+          const project = {
             name: nombreProyecto.value,
             startDate: fechaInicio.value,
             finishDate: fechaLimite.value,
             description: descripcionProyecto.value
+          };
+    
+          const response = await projectService.updateProject(id.value, project);
+          if (response.status === 201) {
+            toast.success('project updated successfully!', {
+              autoClose: 3000 // 3 segundos
+            });
+            router.push('/project/' + id.value);
+          } else {
+            toast.error('Failed to update project.', {
+              autoClose: 5000 // 5 segundos
+            });
+          }
+          console.log(response);
         };
-
-        const response = await projectService.createProject(project);
-        if (response.status === 201) {
-            toast.success('project created successfully!', {
-            autoClose: 3000 // 3 segundos
-        });
-        // setTimeout(() => {
-        //   router.push('/login');
-        // }, 3000); // Espera 3 segundos antes de redirigir
-        } else {
-            toast.error('Failed to create project.', {
-            autoClose: 5000 // 5 segundos
-        });
-        }
-        console.log(response)
-
-        };
-
+    
         return {
-        nombreProyecto,
-        fechaInicio,
-        fechaLimite,
-        descripcionProyecto,
-        submitForm
+          nombreProyecto,
+          fechaInicio,
+          fechaLimite,
+          descripcionProyecto,
+          submitForm
+        };
+      },
+      components: {
+        AsideDash
+      }
     };
-    },
-    components: {
-    AsideDash
-    }
-};
 </script>

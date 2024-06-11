@@ -15,8 +15,8 @@
                 <button @click="goCreateTest" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Crear Test</button>
                 <div>
-                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2" @click="editProject()">Editar Proyecto</button>
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deleteProject()">Borrar Proyecto</button>
+                <button @click="goEditProject" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2">Editar Proyecto</button>
+                <button @click="deleteProject()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Borrar Proyecto</button>
                 </div>
             </div>
             </div>
@@ -51,11 +51,26 @@ export default {
 
         const goCreateTest = () => {
             router.push({ name: 'CreateTest', query: { id: route.params.id } });
-        }; 
+        };
+        
+        const goEditProject = () => {
+            router.push({ name: 'ProjectEdit', params: {
+                Name: project.Name,
+                StartDate: project.StartDate,
+                FinishDate: project.FinishDate,
+                Description: project.Description,
+                Id: project.Id
+                } });
+        };
+
+        // const goDeleteProyect = () => {
+        //     router.push({ name: 'CreateTest', query: { id: route.params.id } });
+        // };
 
         return {
         project,
-        goCreateTest
+        goCreateTest,
+        goEditProject
         };
     },
     components: {

@@ -53,9 +53,10 @@ const routes = [
     component: ProjectView,
   },
   {
-    path: '/project/:id/edit',
+    path: '/project/edit-project',
     name: 'ProjectEdit',
     component: EditProject,
+    props: true
   }
 ];
 

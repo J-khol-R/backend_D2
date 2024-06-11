@@ -32,6 +32,16 @@ class ProjectService {
 
         return axios.get(PROJECT_URL, { headers });
     }
+
+    updateProject(id, data) {
+        const token = localStorage.getItem('token');
+
+        const headers = {
+        Authorization: `${token}`
+        };
+
+        return axios.put(USER_URL + '/' + id, data);
+    }
 }
 
 export default new ProjectService();

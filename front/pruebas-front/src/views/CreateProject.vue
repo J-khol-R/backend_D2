@@ -62,6 +62,7 @@
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css';
   import AsideDash from '../components/AsideDash.vue'
+  import { useRouter } from 'vue-router';
   
   export default {
     setup() {
@@ -69,6 +70,7 @@
       const fechaInicio = ref('');
       const fechaLimite = ref('');
       const descripcionProyecto = ref('');
+      const router = useRouter();
   
       const submitForm = async () => {
         const project = {
@@ -83,9 +85,7 @@
             toast.success('project created successfully!', {
             autoClose: 3000 // 3 segundos
           });
-          // setTimeout(() => {
-          //   router.push('/login');
-          // }, 3000); // Espera 3 segundos antes de redirigir
+          router.push('/projects');
         } else {
             toast.error('Failed to create project.', {
             autoClose: 5000 // 5 segundos
