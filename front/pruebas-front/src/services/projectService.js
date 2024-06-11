@@ -1,14 +1,26 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:8081/v1/projects';
+const PROJECT_URL = 'http://localhost:8081/v1/projects';
 
 class ProjectService {
-    createProject(data) {
-        return axios.post(URL, data);
+    getProjectById(id) {
+        const token = localStorage.getItem('token');
+
+        const headers = {
+        Authorization: `${token}`
+        };
+
+        return axios.get(`${PROJECT_URL}/${id}`, { headers });
     }
 
-    getProjects() {
-        return axios.get(URL);
+    createProject(data){
+        const token = localStorage.getItem('token');
+
+        const headers = {
+        Authorization: `${token}`
+        };
+
+        return axios.post(`${PROJECT_URL}`, data, { headers });
     }
 }
 
