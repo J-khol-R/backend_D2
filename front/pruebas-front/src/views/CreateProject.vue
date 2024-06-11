@@ -1,44 +1,51 @@
 <template>
-    <div>
+  <div class="flex min-h-screen">
+    <AsideDash />
+    <div class="flex-grow bg-gray-100 flex flex-col justify-center items-center">
       <h1 class="font-sans font-medium text-4xl pb-14 pt-6 text-center">Crear Proyecto</h1>
-      <div class="flex justify-center">
-        <form class="w-96" @submit.prevent="handleAgregarProyecto">
-          <div>
-            <label class="block font-sans font-medium text-xl">Nombre</label>
+      <div class="w-full max-w-xs">
+        <form @submit.prevent="submitForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="nombreProyecto">Nombre</label>
             <input
+              id="nombreProyecto"
               type="text"
-              class="input input-bordered w-full my-2"
               v-model="nombreProyecto"
+              class="bg-gray-200 input input-bordered w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Nombre del proyecto"
             />
           </div>
-          <div>
-            <label class="block font-sans font-medium text-xl">Descripción</label>
-            <input
-              type="text"
-              class="input input-bordered w-full my-3"
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="descripcionProyecto">Descripción</label>
+            <textarea
+              id="descripcionProyecto"
               v-model="descripcionProyecto"
-            />
+              class="bg-gray-200 input input-bordered w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Descripción del proyecto"
+            ></textarea>
           </div>
-          <div>
-            <label class="block font-sans font-medium text-xl">Fecha inicio</label>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="fechaInicio">Fecha inicio</label>
             <input
+              id="fechaInicio"
               type="date"
-              class="input input-bordered w-full my-2"
               v-model="fechaInicio"
+              class="bg-gray-200 input input-bordered w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div>
-            <label class="block font-sans font-medium text-xl">Fecha limite</label>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="fechaLimite">Fecha límite</label>
             <input
+              id="fechaLimite"
               type="date"
-              class="input input-bordered w-full my-2"
               v-model="fechaLimite"
+              class="bg-gray-200 input input-bordered w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div>
+          <div class="flex items-center justify-center">
             <button
               type="submit"
-              class="btn btn-outline w-full"
+              class="btn btn-primary group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Agregar Proyecto
             </button>
@@ -46,53 +53,58 @@
         </form>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
-    import ProjectService from '../services/projectService';
-
+  import { ref } from 'vue';
+  import projectService from '../services/projectService';
+  import { toast } from 'vue3-toastify';
+  import 'vue3-toastify/dist/index.css';
+  import AsideDash from '../components/AsideDash.vue'
+  
   export default {
-    data() {
-      return {
-        nombreProyecto: '',
-        fechaInicio: '',
-        fechaLimite: '',
-        descripcionProyecto: ''
+    setup() {
+      const nombreProyecto = ref('');
+      const fechaInicio = ref('');
+      const fechaLimite = ref('');
+      const descripcionProyecto = ref('');
+  
+      const submitForm = async () => {
+        const project = {
+            name: nombreProyecto.value,
+            startDate: fechaInicio.value,
+            finishDate: fechaLimite.value,
+            description: descripcionProyecto.value
+        };
+
+        const response = await projectService.createProject(project);
+        if (response.status === 201) {
+            toast.success('project created successfully!', {
+            autoClose: 3000 // 3 segundos
+          });
+          // setTimeout(() => {
+          //   router.push('/login');
+          // }, 3000); // Espera 3 segundos antes de redirigir
+        } else {
+            toast.error('Failed to create project.', {
+            autoClose: 5000 // 5 segundos
+          });
+        }
+        console.log(response)
+
+        };
+
+        return {
+        nombreProyecto,
+        fechaInicio,
+        fechaLimite,
+        descripcionProyecto,
+        submitForm
       };
     },
-    methods: {
-      async handleAgregarProyecto() {
-        try {
-        // Objeto con los datos del proyecto
-        const proyectoData = {
-            nombre: this.nombreProyecto,
-            fechaInicio: this.fechaInicio,
-            fechaLimite: this.fechaLimite,
-            descripcionProyecto: this.descripcionProyecto
-        };
-        
-        // Envía los datos del proyecto al backend
-        const response = await ProjectService.createProject(proyectoData);
-
-        // Verifica si la solicitud fue exitosa
-        if (response.status === 201) {
-            // Limpiar los campos después de agregar el proyecto
-            this.nombreProyecto = '';
-            this.fechaInicio = '';
-            this.fechaLimite = '';
-
-            console.log('Proyecto agregado con éxito');
-        } else {
-            console.error('Error al agregar el proyecto:', response.data);
-        }
-        } catch (error) {
-        console.error('Error al agregar el proyecto:', error);
-        }
-      }
+    components: {
+      AsideDash
     }
   };
   </script>
-  
-  <!-- <style scoped>
-  /* Aquí puedes agregar tus estilos */
-  </style> -->

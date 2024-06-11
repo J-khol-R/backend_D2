@@ -27,6 +27,7 @@ func main() {
 
 	//projects
 	r.HandleFunc("/v1/projects", controllers.GetAllprojects).Methods(http.MethodGet)
+	r.HandleFunc("/v1/projects/{id}", controllers.GetProject).Methods(http.MethodGet)
 	r.HandleFunc("/v1/projects", controllers.CreateProject).Methods(http.MethodPost)
 
 	//tests

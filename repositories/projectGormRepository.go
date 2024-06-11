@@ -26,3 +26,11 @@ func (r *ProjectGormRepository) List() ([]models.Project, error) {
 func (r *ProjectGormRepository) Create(projects *models.Project) error {
 	return r.db.Create(projects).Error
 }
+
+func (r *ProjectGormRepository) Read(id uint) (*models.Project, error) {
+	var project models.Project
+	if err := r.db.First(&project, id).Error; err != nil {
+		return nil, err
+	}
+	return &project, nil
+}
