@@ -10,6 +10,7 @@
             :codigo="proyecto.codigo"
             :nombre="proyecto.nombre"
             :descripcion="proyecto.descripcion"
+            :fechaInicio="proyecto.fechaInicio"
             :fechaLimite="proyecto.fechaLimite"
             :pruebas="proyecto.pruebas"
           />
