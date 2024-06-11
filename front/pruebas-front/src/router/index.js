@@ -42,6 +42,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     redirect: '/login'
   },
+  {
     path: '/create-test',
     name: 'CreateTest',
     component: CreateTest,
