@@ -22,11 +22,11 @@
   //import PruebaProyecto from '../pruebas/PruebaProyecto.vue';
   
   export default {
-    setup(){
-
+    setup(props){
         const router = useRouter();
+
         const verProyecto = () => {
-            router.push({path: `/projects/${codigo}`});
+            router.push({ name: 'ProjectView', params: { id: props.idProject } });
         };
         return {verProyecto};
     },
@@ -35,12 +35,9 @@
         descripcion: String,
         fechaInicio: String,
         fechaLimite: String,
-        codigo: String
+        idProject: String
     }
   }
-
-
-    
   
   </script>
   

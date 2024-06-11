@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';
-import HomeView from '../views/HomeView.vue';
 import ProjectView from '../views/ProjectView.vue';
 import CreateProject from '../views/CreateProject.vue';
 import HomeProjects from '../views/HomeProjects.vue';
 import UsersView from '../views/UsersView.vue';
 import CreateTest from '../views/CreateTest.vue';
+import EditProject from '../views/EditProject.vue';
 
 const routes = [
   {
@@ -42,6 +42,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     redirect: '/login'
   },
+  {
     path: '/create-test',
     name: 'CreateTest',
     component: CreateTest,
@@ -51,11 +52,11 @@ const routes = [
     name: 'ProjectView',
     component: ProjectView,
   },
-  // {
-  //   path: '/users',
-  //   name: 'Users',
-  //   component: HomeView,
-  // },
+  {
+    path: '/project/:id/edit',
+    name: 'ProjectEdit',
+    component: EditProject,
+  }
 ];
 
 const router = createRouter({

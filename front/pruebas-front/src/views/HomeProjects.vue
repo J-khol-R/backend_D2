@@ -5,13 +5,13 @@
         <p class="font-sans font-medium text-4xl pb-14 pt-6 text-center">Proyectos</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
           <Project
-            v-for="proyecto in proyectos"
-            :key="proyecto.codigo"
-            :codigo="proyecto.codigo"
-            :nombre="proyecto.nombre"
-            :descripcion="proyecto.descripcion"
-            :fechaLimite="proyecto.fechaLimite"
-            :pruebas="proyecto.pruebas"
+            v-for="proyecto in projects"
+            :key="proyecto.Id"
+            :idProject="proyecto.Id"
+            :nombre="proyecto.Name"
+            :descripcion="proyecto.Description"
+            :fechaLimite="proyecto.FinishDate"
+            :fechaInicio="proyecto.StartDate"
           />
         </div>
       </div>
@@ -21,9 +21,12 @@
 <script>
     import Project from "../components/Project.vue";
     import AsideDash from '../components/AsideDash.vue'
+    import { ref, onMounted } from 'vue';
+    import projectService from '../services/projectService'; 
 
     export default {
         setup() {
+            const projects = ref([]);
             const proyectos = [
             {
                 codigo: "1",
@@ -236,10 +239,27 @@
                     }  
                 ]
             }
-            // Aquí continúan los demás proyectos
+            
+
+
+
             ];
+
+
+            onMounted(async () => {
+            try {
+                const response = await projectService.getProjects();
+                projects.value = response.data;
+
+                console.log(projects)
+            } catch (error) {
+                console.error('Error al cargar el proyecto:', error);
+            }
+            }); 
+            
             return {
-                proyectos
+                proyectos,
+                projects
             }
         },
         components: {
@@ -249,8 +269,4 @@
     }
 </script>
 
-<style scoped>
-    /* Estilos específicos para este componente */
-    /* Puedes añadir tus estilos personalizados aquí */
-</style>
   

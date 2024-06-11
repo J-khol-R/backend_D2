@@ -37,19 +37,20 @@
             }
         };
 
-        const handleEdit = () {
-            // Lógica para manejar la edición del elemento (a implementar)
-            //console.log(`Editar elemento con ID: ${this.el.id}`);
-        };
+        // const handleEdit = () {
+        //     // Lógica para manejar la edición del elemento (a implementar)
+        //     //console.log(`Editar elemento con ID: ${this.el.id}`);
+        // };
 
-        const handleDelete = () {
-            // Lógica para manejar la eliminación del elemento (a implementar)
-        // console.log(`Eliminar elemento con ID: ${this.el.id}`);
-        };
+        // const handleDelete = () {
+        //     // Lógica para manejar la eliminación del elemento (a implementar)
+        // // console.log(`Eliminar elemento con ID: ${this.el.id}`);
+        // };
         return {
             users,
             handleEdit,
             handleDelete,
+            getUsers
         };
 
     },
